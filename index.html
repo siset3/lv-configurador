@@ -15,8 +15,6 @@
       --slate-400: #94a3b8;
       --slate-200: #e2e8f0;
       --bg-body: #f8fafc;
-      --radius-lg: 1rem;
-      --radius-md: 0.75rem;
       --shadow-subtle: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.05);
     }
 
@@ -32,18 +30,17 @@
       color: var(--slate-900);
       -webkit-font-smoothing: antialiased;
       line-height: 1.5;
-      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+      min-height: 100vh;
+      width: 100vw;
+      overflow-x: hidden;
     }
 
+    /* Contenedor principal responsive adaptado a móvil a sangre */
     .lv-app-container {
       width: 100%;
       max-width: 1200px;
       margin: 0 auto;
-      padding: clamp(0.75rem, 3vw, 2rem);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+      padding: 0;
     }
 
     @media (min-width: 768px) {
@@ -54,10 +51,22 @@
 
     .lv-card-wrapper {
       background: #ffffff;
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-subtle);
-      border: 1px solid rgba(226, 232, 240, 0.8);
-      padding: clamp(1.25rem, 4vw, 2.5rem);
+      width: 100%;
+      min-height: 100vh;
+      padding: 1.25rem 1rem;
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
+    }
+
+    @media (min-width: 768px) {
+      .lv-card-wrapper {
+        min-height: auto;
+        border-radius: 1rem;
+        box-shadow: var(--shadow-subtle);
+        border: 1px solid rgba(226, 232, 240, 0.8);
+        padding: 2.5rem;
+      }
     }
 
     .lv-grid-layout {
@@ -82,14 +91,11 @@
     }
 
     .lv-section-title {
-      font-size: clamp(1rem, 2vw, 1.15rem);
+      font-size: clamp(1.05rem, 2vw, 1.15rem);
       font-weight: 800;
       color: var(--slate-900);
       margin-bottom: 0.85rem;
       letter-spacing: -0.01em;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
     }
 
     .lv-hidden-input {
@@ -117,7 +123,7 @@
       justify-content: space-between;
       cursor: pointer;
       border: 2px solid var(--slate-200);
-      border-radius: var(--radius-md);
+      border-radius: 0.75rem;
       padding: 1rem;
       background: #ffffff;
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -127,11 +133,10 @@
 
     .lv-mode-card:hover {
       border-color: var(--slate-400);
-      transform: translateY(-2px);
     }
 
     .lv-mode-card:active {
-      transform: translateY(0);
+      transform: scale(0.98);
     }
 
     .lv-hidden-input:checked + .lv-mode-card {
@@ -169,7 +174,7 @@
     .lv-option-item {
       cursor: pointer;
       border: 1.5px solid var(--slate-200);
-      border-radius: var(--radius-md);
+      border-radius: 0.75rem;
       padding: 0.85rem 1rem;
       background: #ffffff;
       font-size: 0.875rem;
@@ -180,7 +185,7 @@
       align-items: center;
       transition: all 0.2s ease;
       user-select: none;
-      min-height: 48px; /* Estándar de accesibilidad táctil 2026 */
+      min-height: 48px;
     }
 
     .lv-option-item:hover {
@@ -197,7 +202,6 @@
       font-size: 1.15rem;
       font-weight: 700;
       color: var(--slate-400);
-      transition: transform 0.2s;
     }
 
     .lv-hidden-input:checked + .lv-option-item {
@@ -215,12 +219,21 @@
     .lv-sidebar {
       background: var(--slate-900);
       color: #ffffff;
-      border-radius: var(--radius-lg);
-      padding: 1.5rem;
+      border-radius: 0.75rem;
+      padding: 1.25rem;
       box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.2);
       display: flex;
       flex-direction: column;
       gap: 1.25rem;
+      margin-top: 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .lv-sidebar {
+        border-radius: 1rem;
+        padding: 1.5rem;
+        margin-top: 0;
+      }
     }
 
     @media (min-width: 1024px) {
@@ -236,7 +249,6 @@
       font-weight: 700;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       padding-bottom: 0.75rem;
-      letter-spacing: -0.01em;
     }
 
     .lv-badge-promo {
@@ -244,12 +256,9 @@
       color: #34d399;
       border: 1px solid rgba(52, 211, 153, 0.2);
       padding: 0.75rem 1rem;
-      border-radius: var(--radius-md);
+      border-radius: 0.75rem;
       font-size: 0.8rem;
       font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
       line-height: 1.4;
     }
 
@@ -270,7 +279,7 @@
       color: #022c22 !important;
       font-weight: 700;
       border: none;
-      border-radius: var(--radius-md);
+      border-radius: 0.75rem;
       text-decoration: none !important;
       font-size: 1rem;
       text-align: center;
@@ -283,11 +292,6 @@
     .lv-btn-whatsapp:hover {
       background: #34d399;
       transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6);
-    }
-
-    .lv-btn-whatsapp:active {
-      transform: translateY(0);
     }
   </style>
 </head>
@@ -297,7 +301,7 @@
     <div class="lv-card-wrapper">
       <div class="lv-grid-layout">
         
-        <!-- CONFIGURADOR INTERactivo -->
+        <!-- CONFIGURADOR INTERACTIVO -->
         <div style="display: flex; flex-direction: column; gap: 1.75rem;">
           
           <!-- Paso 1: Modalidad -->

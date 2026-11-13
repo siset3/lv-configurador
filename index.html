@@ -258,6 +258,40 @@
       transform: scale(0.95);
     }
 
+    /* Preview Box en el Sidebar */
+    .lv-preview-box {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      font-size: 0.825rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .lv-preview-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .lv-preview-label {
+      color: var(--slate-400);
+      font-weight: 500;
+    }
+
+    .lv-preview-value {
+      color: #ffffff;
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .lv-preview-value.highlight {
+      color: #34d399;
+    }
+
     /* Sidebar / Checkout flotante moderno */
     .lv-sidebar {
       background: var(--slate-900);
@@ -267,7 +301,7 @@
       box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.2);
       display: flex;
       flex-direction: column;
-      gap: 1.25rem;
+      gap: 1rem;
       margin-top: 1rem;
     }
 
@@ -303,6 +337,7 @@
       font-size: 0.8rem;
       font-weight: 600;
       line-height: 1.4;
+      margin-bottom: 0.5rem;
     }
 
     .lv-btn-whatsapp {
@@ -441,13 +476,25 @@
             </div>
           </div>
 
+          <!-- Preview en Tiempo Real -->
+          <div class="lv-preview-box">
+            <div class="lv-preview-row">
+              <span class="lv-preview-label">Modalidad:</span>
+              <span class="lv-preview-value" id="prev-pack">Pack Multiaventura</span>
+            </div>
+            <div class="lv-preview-row">
+              <span class="lv-preview-label">Actividades:</span>
+              <span class="lv-preview-value highlight" id="prev-activities">Barranquismo (Jorox / Zarzalones)</span>
+            </div>
+            <div class="lv-preview-row" id="prev-extras-container" style="display: none;">
+              <span class="lv-preview-label">Extras:</span>
+              <span class="lv-preview-value" id="prev-extras" style="color: #34d399;">Ninguno</span>
+            </div>
+          </div>
+
           <div class="lv-badge-promo">
             <span>📷 ¡Todas las opciones incluyen reportaje fotográfico profesional en alta definición!</span>
           </div>
-
-          <p style="font-size: 0.825rem; color: var(--slate-400); line-height: 1.5;">
-            Haz clic en el botón para enviar tu selección exacta por WhatsApp y te responderemos al instante con disponibilidad y presupuesto.
-          </p>
 
           <a href="#" id="whatsapp-btn" target="_blank" rel="noopener" class="lv-btn-whatsapp">
             <span>Consultar por WhatsApp</span>
@@ -466,11 +513,17 @@
       const paxPlus = document.getElementById('pax-plus');
       const whatsappBtn = document.getElementById('whatsapp-btn');
 
+      // Elementos del Preview visual
+      const prevPack = document.getElementById('prev-pack');
+      const prevActivities = document.getElementById('prev-activities');
+      const prevExtras = document.getElementById('prev-extras');
+      const prevExtrasContainer = document.getElementById('prev-extras-container');
+
       paxMinus.addEventListener('click', function () {
         if (participants > 1) {
           participants--;
           paxCountSpan.textContent = participants;
-          updateWhatsAppLink();
+          updateConfigurator();
         }
       });
 
@@ -478,33 +531,48 @@
         if (participants < 50) {
           participants++;
           paxCountSpan.textContent = participants;
-          updateWhatsAppLink();
+          updateConfigurator();
         }
       });
 
-      // Escuchar cambios en cualquier input del configurador
       document.querySelectorAll('input').forEach(input => {
-        input.addEventListener('change', updateWhatsAppLink);
+        input.addEventListener('change', updateConfigurator);
       });
 
-      function updateWhatsAppLink() {
-        // Obtener modalidad seleccionada
+      function updateConfigurator() {
+        // 1. Obtener modalidad
         const selectedPack = document.querySelector('input[name="lv_pack"]:checked');
         const packName = selectedPack ? selectedPack.value : 'Pack Personalizado';
 
-        // Obtener actividades seleccionadas
+        // 2. Obtener actividades
         const activities = [];
         document.querySelectorAll('input[id^="act_"]:checked').forEach(el => {
           activities.push(el.value);
         });
 
-        // Obtener extras seleccionados
+        // 3. Obtener extras
         const extras = [];
         document.querySelectorAll('input[id^="ext_"]:checked').forEach(el => {
           extras.push(el.value);
         });
 
-        // Construir mensaje estructurado
+        // --- ACTUALIZAR PREVIEW VISUAL EN LA PANTALLA ---
+        prevPack.textContent = `${packName} (${participants} ${participants === 1 ? 'persona' : 'personas'})`;
+        
+        if (activities.length > 0) {
+          prevActivities.textContent = activities.join(', ');
+        } else {
+          prevActivities.textContent = 'Ninguna seleccionada';
+        }
+
+        if (extras.length > 0) {
+          prevExtrasContainer.style.display = 'flex';
+          prevExtras.textContent = extras.join(', ');
+        } else {
+          prevExtrasContainer.style.display = 'none';
+        }
+
+        // --- CONSTRUIR MENSAJE Y ENLACE DE WHATSAPP ---
         let message = `¡Hola! Vengo de la web de Libertad Vertical y quiero consultar disponibilidad para este pack:\n\n`;
         message += `• Modalidad: ${packName}\n`;
         message += `• Participantes: ${participants} personas\n`;
@@ -512,13 +580,12 @@
         message += `• Servicios extra: ${extras.length > 0 ? extras.join(', ') : 'Ninguno'}\n\n`;
         message += `¿Me podéis pasar presupuesto y disponibilidad?`;
 
-        // Asignar enlace de WhatsApp con la URL codificada
         const phone = '34613061747';
         whatsappBtn.href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
       }
 
-      // Inicializar enlace al cargar la página
-      updateWhatsAppLink();
+      // Inicializar al cargar
+      updateConfigurator();
     });
   </script>
 

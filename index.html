@@ -1,0 +1,435 @@
+<div id="lv-pack-builder-app" class="lv-wrap">
+  <style>
+    .lv-wrap {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: #0f172a;
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 1rem;
+      box-sizing: border-box;
+      background: #ffffff;
+      border-radius: 1rem;
+    }
+    .lv-wrap *, .lv-wrap *::before, .lv-wrap *::after {
+      box-sizing: border-box;
+    }
+    .lv-wrap .lv-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    @media (min-width: 992px) {
+      .lv-wrap .lv-grid {
+        grid-template-columns: 2fr 1fr;
+      }
+    }
+    .lv-wrap .lv-section-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+      color: #0f172a;
+    }
+    .lv-wrap .lv-cards-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+    @media (min-width: 640px) {
+      .lv-wrap .lv-cards-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .lv-wrap .lv-card {
+      cursor: pointer;
+      border: 2px solid #e2e8f0;
+      border-radius: 0.75rem;
+      padding: 1rem;
+      background: #ffffff;
+      transition: all 0.2s ease;
+      text-align: left;
+      user-select: none;
+    }
+    .lv-wrap .lv-card:hover {
+      border-color: #cbd5e1;
+    }
+    .lv-wrap .lv-card.selected {
+      border-color: #059669;
+      background-color: #f0fdf4;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .lv-wrap .lv-card-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #0f172a;
+      margin-bottom: 0.25rem;
+      pointer-events: none;
+    }
+    .lv-wrap .lv-card-desc {
+      font-size: 0.75rem;
+      color: #64748b;
+      line-height: 1.3;
+      pointer-events: none;
+    }
+    .lv-wrap .lv-checkbox-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+    @media (min-width: 640px) {
+      .lv-wrap .lv-checkbox-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    .lv-wrap .lv-check-item {
+      cursor: pointer;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 0.5rem;
+      padding: 0.75rem 1rem;
+      background: #ffffff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .lv-wrap .lv-check-item:hover {
+      border-color: #cbd5e1;
+    }
+    .lv-wrap .lv-check-item.selected {
+      border-color: #059669;
+      background-color: #f0fdf4;
+      color: #065f46;
+    }
+    .lv-wrap .lv-check-item span {
+      pointer-events: none;
+    }
+    .lv-wrap .lv-sidebar {
+      background: #0f172a;
+      color: #ffffff;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      position: sticky;
+      top: 2rem;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+    .lv-wrap .lv-sidebar-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-bottom: 1px solid #334155;
+      padding-bottom: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .lv-wrap .lv-pax-box {
+      background: #1e293b;
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      font-size: 0.85rem;
+    }
+    .lv-wrap .lv-pax-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .lv-wrap .lv-btn-pax {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 0.5rem;
+      background: #334155;
+      color: white;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+    .lv-wrap .lv-btn-pax:hover {
+      background: #475569;
+    }
+    .lv-wrap .lv-summary-rows {
+      font-size: 0.85rem;
+      color: #cbd5e1;
+      border-bottom: 1px solid #334155;
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .lv-wrap .lv-row-flex {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    .lv-wrap .lv-notice-tag {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      padding: 0.6rem 0.75rem;
+      border-radius: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .lv-wrap .lv-btn-submit {
+      width: 100%;
+      padding: 0.875rem;
+      background: #10b981;
+      color: #022c22;
+      font-weight: 700;
+      border: none;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      font-size: 0.95rem;
+      text-align: center;
+    }
+    .lv-wrap .lv-btn-submit:hover {
+      background: #34d399;
+    }
+  </style>
+
+  <div class="lv-grid">
+    <!-- CONFIGURADOR -->
+    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+      <div>
+        <div class="lv-section-title">1. Elige tu modalidad de Pack</div>
+        <div class="lv-cards-grid">
+          <div class="lv-card selected" data-pack="multiaventura">
+            <div class="lv-card-title">Pack Multiaventura</div>
+            <div class="lv-card-desc">Fin de semana completo con alojamiento, transporte y varias actividades.</div>
+          </div>
+          <div class="lv-card" data-pack="grupo">
+            <div class="lv-card-title">Pack Grupos</div>
+            <div class="lv-card-desc">Ideal para cumples o despedidas. ¡Ahorra más cuantos más seáis!</div>
+          </div>
+          <div class="lv-card" data-pack="vip">
+            <div class="lv-card-title">Pack VIP Exclusivo</div>
+            <div class="lv-card-desc">Guía solo para vosotros (1 a 5 pax), pícnic, sorpresas y vídeo POV.</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="lv-section-title">2. Selecciona tus deportes de aventura</div>
+        <div class="lv-checkbox-grid">
+          <div class="lv-check-item selected" data-activity="Barranquismo (Jorox / Zarzalones / Río Verde)">
+            <span>Barranquismo (Jorox / Zarzalones)</span>
+            <span class="lv-icon">✓</span>
+          </div>
+          <div class="lv-check-item" data-activity="Vía Ferrata (Comares / Archidona / Ronda)">
+            <span>Vía Ferrata (Comares / Archidona)</span>
+            <span class="lv-icon">+</span>
+          </div>
+          <div class="lv-check-item" data-activity="Caminito del Rey + Multiaventura">
+            <span>Caminito del Rey + Multiaventura</span>
+            <span class="lv-icon">+</span>
+          </div>
+          <div class="lv-check-item" data-activity="Cuevas (Cueva Excéntrica Igualeja)">
+            <span>Cuevas (Cueva Excéntrica Igualeja)</span>
+            <span class="lv-icon">+</span>
+          </div>
+          <div class="lv-check-item" data-activity="Senderismo (Río Chíllar / Mulhacén)">
+            <span>Senderismo (Río Chíllar / Mulhacén)</span>
+            <span class="lv-icon">+</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="lv-section-title">3. Servicios adicionales</div>
+        <div class="lv-checkbox-grid">
+          <div class="lv-check-item" data-extra="Alojamiento / Casa Rural">
+            <span>Incluir Alojamiento / Casa Rural</span>
+            <span class="lv-icon">+</span>
+          </div>
+          <div class="lv-check-item" data-extra="Transporte a las actividades">
+            <span>Incluir Transporte a Actividades</span>
+            <span class="lv-icon">+</span>
+          </div>
+          <div class="lv-check-item" data-extra="Pícnic y bebida al terminar">
+            <span>Pícnic y Bebida al terminar</span>
+            <span class="lv-icon">+</span>
+          </div>
+          <div class="lv-check-item" data-extra="Vídeo editado en 1ª persona (POV)">
+            <span>Vídeo Editado en 1ª Persona (POV)</span>
+            <span class="lv-icon">+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div>
+      <div class="lv-sidebar">
+        <div class="lv-sidebar-title">Tu Experiencia a Medida</div>
+
+        <div class="lv-pax-box">
+          <span>Participantes</span>
+          <div class="lv-pax-controls">
+            <button type="button" class="lv-btn-pax" id="lv-pax-minus">-</button>
+            <span id="lv-pax-count" style="font-weight: bold; font-size: 1.1rem; width: 1.5rem; text-align: center;">4</span>
+            <button type="button" class="lv-btn-pax" id="lv-pax-plus">+</button>
+          </div>
+        </div>
+
+        <div class="lv-notice-tag">
+          📷 ¡Todas las opciones incluyen reportaje fotográfico!
+        </div>
+
+        <div class="lv-summary-rows">
+          <div class="lv-row-flex">
+            <span style="color: #94a3b8;">Modalidad:</span>
+            <span id="summary-pack-name" style="font-weight: 600; color: #fff; text-align: right;">Pack Multiaventura</span>
+          </div>
+          <div class="lv-row-flex">
+            <span style="color: #94a3b8;">Actividades:</span>
+            <span id="summary-activities-count" style="font-weight: 600; color: #fff; text-align: right;">1 seleccionada</span>
+          </div>
+          <div class="lv-row-flex" id="summary-extras-row" style="display: none;">
+            <span style="color: #94a3b8;">Extras:</span>
+            <span id="summary-extras-text" style="font-weight: 600; color: #34d399; text-align: right;"></span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 1.5rem; font-size: 0.8rem; color: #94a3b8; line-height: 1.4;">
+          Adaptamos horarios, logística y tarifas exactas a tu grupo. Consúltanos sin compromiso.
+        </div>
+
+        <button type="button" class="lv-btn-submit" id="lv-submit-whatsapp">
+          Consultar por WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Retardamos la ejecución para blindarnos ante errores globales externos de otros scripts
+    setTimeout(function() {
+      try {
+        const root = document.getElementById('lv-pack-builder-app');
+        if (!root) return;
+
+        const packNames = {
+          multiaventura: 'Pack Multiaventura',
+          grupo: 'Pack Grupos',
+          vip: 'Pack VIP Exclusivo'
+        };
+
+        let state = {
+          pack: 'multiaventura',
+          activities: ['Barranquismo (Jorox / Zarzalones / Río Verde)'],
+          extras: [],
+          participants: 4
+        };
+
+        function updateUI() {
+          const packEl = root.querySelector('#summary-pack-name');
+          const actCountEl = root.querySelector('#summary-activities-count');
+          const paxEl = root.querySelector('#lv-pax-count');
+          const extrasRow = root.querySelector('#summary-extras-row');
+          const extrasText = root.querySelector('#summary-extras-text');
+
+          if (packEl) packEl.textContent = packNames[state.pack];
+          if (actCountEl) {
+            actCountEl.textContent =
+              state.activities.length + (state.activities.length === 1 ? ' seleccionada' : ' seleccionadas');
+          }
+          if (paxEl) paxEl.textContent = state.participants;
+
+          if (extrasRow && extrasText) {
+            if (state.extras.length > 0) {
+              extrasRow.style.display = 'flex';
+              extrasText.textContent = state.extras.join(', ');
+            } else {
+              extrasRow.style.display = 'none';
+            }
+          }
+        }
+
+        root.addEventListener('click', function (e) {
+          const packCard = e.target.closest('[data-pack]');
+          if (packCard) {
+            state.pack = packCard.getAttribute('data-pack');
+            root.querySelectorAll('[data-pack]').forEach(el => el.classList.remove('selected'));
+            packCard.classList.add('selected');
+
+            if (state.pack === 'vip' && state.participants > 5) {
+              state.participants = 5;
+            }
+            updateUI();
+            return;
+          }
+
+          const actItem = e.target.closest('[data-activity]');
+          if (actItem) {
+            const val = actItem.getAttribute('data-activity');
+            const icon = actItem.querySelector('.lv-icon');
+            if (state.activities.includes(val)) {
+              if (state.activities.length === 1) return;
+              state.activities = state.activities.filter(item => item !== val);
+              actItem.classList.remove('selected');
+              if (icon) icon.textContent = '+';
+            } else {
+              state.activities.push(val);
+              actItem.classList.add('selected');
+              if (icon) icon.textContent = '✓';
+            }
+            updateUI();
+            return;
+          }
+
+          const extItem = e.target.closest('[data-extra]');
+          if (extItem) {
+            const val = extItem.getAttribute('data-extra');
+            const icon = extItem.querySelector('.lv-icon');
+            if (state.extras.includes(val)) {
+              state.extras = state.extras.filter(item => item !== val);
+              extItem.classList.remove('selected');
+              if (icon) icon.textContent = '+';
+            } else {
+              state.extras.push(val);
+              extItem.classList.add('selected');
+              if (icon) icon.textContent = '✓';
+            }
+            updateUI();
+            return;
+          }
+
+          if (e.target.closest('#lv-pax-minus')) {
+            state.participants = Math.max(1, state.participants - 1);
+            updateUI();
+            return;
+          }
+          if (e.target.closest('#lv-pax-plus')) {
+            const maxPax = state.pack === 'vip' ? 5 : 50;
+            state.participants = Math.min(maxPax, state.participants + 1);
+            updateUI();
+            return;
+          }
+
+          if (e.target.closest('#lv-submit-whatsapp')) {
+            const extraList = state.extras.length > 0 ? state.extras.join(', ') : 'Ninguno';
+            const message =
+              '¡Hola! He diseñado este pack en Libertad Vertical:\n\n' +
+              '• Modalidad: ' + packNames[state.pack] + '\n' +
+              '• Participantes: ' + state.participants + ' personas\n' +
+              '• Actividades: ' + state.activities.join(', ') + '\n' +
+              '• Servicios extra: ' + extraList + '\n\n' +
+              '¿Me podéis pasar disponibilidad y presupuesto?';
+
+            window.open('https://wa.me/34613061747?text=' + encodeURIComponent(message), '_blank');
+          }
+        });
+      } catch (err) {
+        console.error('Configurador iniciado de forma segura:', err);
+      }
+    }, 150);
+  </script>
+</div>

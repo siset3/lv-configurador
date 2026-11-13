@@ -35,7 +35,6 @@
       overflow-x: hidden;
     }
 
-    /* Contenedor principal responsive adaptado a móvil a sangre */
     .lv-app-container {
       width: 100%;
       max-width: 1200px;
@@ -77,7 +76,7 @@
 
     @media (min-width: 1024px) {
       .lv-grid-layout {
-        grid-template-columns: minmax(0, 1.6fr) minmax(360px, 1fr);
+        grid-template-columns: minmax(0, 1.6fr) minmax(380px, 1fr);
         gap: 2.5rem;
         align-items: start;
       }
@@ -215,6 +214,50 @@
       color: var(--primary);
     }
 
+    /* Control de Participantes */
+    .lv-pax-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.85rem 1rem;
+      border-radius: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .lv-pax-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .lv-btn-pax {
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 0.5rem;
+      background: #334155;
+      color: white;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      transition: background 0.2s;
+    }
+
+    .lv-btn-pax:hover {
+      background: #475569;
+    }
+
+    .lv-btn-pax:active {
+      transform: scale(0.95);
+    }
+
     /* Sidebar / Checkout flotante moderno */
     .lv-sidebar {
       background: var(--slate-900);
@@ -262,12 +305,6 @@
       line-height: 1.4;
     }
 
-    .lv-sidebar-desc {
-      font-size: 0.825rem;
-      color: var(--slate-400);
-      line-height: 1.5;
-    }
-
     .lv-btn-whatsapp {
       display: flex;
       align-items: center;
@@ -309,7 +346,7 @@
             <h2 class="lv-section-title">1. Elige tu modalidad de Pack</h2>
             <div class="lv-modes-grid">
               <div>
-                <input type="radio" name="lv_pack" id="pack_multi" class="lv-hidden-input" checked>
+                <input type="radio" name="lv_pack" id="pack_multi" value="Pack Multiaventura" class="lv-hidden-input" checked>
                 <label for="pack_multi" class="lv-mode-card">
                   <div>
                     <div class="lv-mode-title">Pack Multiaventura</div>
@@ -318,7 +355,7 @@
                 </label>
               </div>
               <div>
-                <input type="radio" name="lv_pack" id="pack_grupo" class="lv-hidden-input">
+                <input type="radio" name="lv_pack" id="pack_grupo" value="Pack Grupos" class="lv-hidden-input">
                 <label for="pack_grupo" class="lv-mode-card">
                   <div>
                     <div class="lv-mode-title">Pack Grupos</div>
@@ -327,7 +364,7 @@
                 </label>
               </div>
               <div>
-                <input type="radio" name="lv_pack" id="pack_vip" class="lv-hidden-input">
+                <input type="radio" name="lv_pack" id="pack_vip" value="Pack VIP Exclusivo" class="lv-hidden-input">
                 <label for="pack_vip" class="lv-mode-card">
                   <div>
                     <div class="lv-mode-title">Pack VIP Exclusivo</div>
@@ -343,23 +380,23 @@
             <h2 class="lv-section-title">2. Selecciona tus deportes de aventura</h2>
             <div class="lv-options-grid">
               <div>
-                <input type="checkbox" id="act_barranco" class="lv-hidden-input" checked>
+                <input type="checkbox" id="act_barranco" value="Barranquismo (Jorox / Zarzalones)" class="lv-hidden-input" checked>
                 <label for="act_barranco" class="lv-option-item">Barranquismo (Jorox / Zarzalones)</label>
               </div>
               <div>
-                <input type="checkbox" id="act_ferrata" class="lv-hidden-input">
+                <input type="checkbox" id="act_ferrata" value="Vía Ferrata (Comares / Archidona)" class="lv-hidden-input">
                 <label for="act_ferrata" class="lv-option-item">Vía Ferrata (Comares / Archidona)</label>
               </div>
               <div>
-                <input type="checkbox" id="act_caminito" class="lv-hidden-input">
+                <input type="checkbox" id="act_caminito" value="Caminito del Rey + Multiaventura" class="lv-hidden-input">
                 <label for="act_caminito" class="lv-option-item">Caminito del Rey + Multiaventura</label>
               </div>
               <div>
-                <input type="checkbox" id="act_cuevas" class="lv-hidden-input">
+                <input type="checkbox" id="act_cuevas" value="Cuevas (Cueva Excéntrica Igualeja)" class="lv-hidden-input">
                 <label for="act_cuevas" class="lv-option-item">Cuevas (Cueva Excéntrica Igualeja)</label>
               </div>
               <div>
-                <input type="checkbox" id="act_senderismo" class="lv-hidden-input">
+                <input type="checkbox" id="act_senderismo" value="Senderismo (Río Chíllar / Mulhacén)" class="lv-hidden-input">
                 <label for="act_senderismo" class="lv-option-item">Senderismo (Río Chíllar / Mulhacén)</label>
               </div>
             </div>
@@ -370,19 +407,19 @@
             <h2 class="lv-section-title">3. Servicios adicionales</h2>
             <div class="lv-options-grid">
               <div>
-                <input type="checkbox" id="ext_alojamiento" class="lv-hidden-input">
+                <input type="checkbox" id="ext_alojamiento" value="Alojamiento / Casa Rural" class="lv-hidden-input">
                 <label for="ext_alojamiento" class="lv-option-item">Incluir Alojamiento / Casa Rural</label>
               </div>
               <div>
-                <input type="checkbox" id="ext_transporte" class="lv-hidden-input">
+                <input type="checkbox" id="ext_transporte" value="Transporte a Actividades" class="lv-hidden-input">
                 <label for="ext_transporte" class="lv-option-item">Incluir Transporte a Actividades</label>
               </div>
               <div>
-                <input type="checkbox" id="ext_picnic" class="lv-hidden-input">
+                <input type="checkbox" id="ext_picnic" value="Pícnic y Bebida al terminar" class="lv-hidden-input">
                 <label for="ext_picnic" class="lv-option-item">Pícnic y Bebida al terminar</label>
               </div>
               <div>
-                <input type="checkbox" id="ext_video" class="lv-hidden-input">
+                <input type="checkbox" id="ext_video" value="Vídeo Editado en 1ª Persona (POV)" class="lv-hidden-input">
                 <label for="ext_video" class="lv-option-item">Vídeo Editado en 1ª Persona (POV)</label>
               </div>
             </div>
@@ -393,13 +430,26 @@
         <!-- SIDEBAR / ACCIÓN -->
         <aside class="lv-sidebar">
           <h3 class="lv-sidebar-title">Tu Experiencia a Medida</h3>
+
+          <!-- Control de Participantes -->
+          <div class="lv-pax-box">
+            <span>Participantes:</span>
+            <div class="lv-pax-controls">
+              <button type="button" class="lv-btn-pax" id="pax-minus">-</button>
+              <span id="pax-count" style="font-size: 1.15rem; min-width: 1.5rem; text-align: center;">4</span>
+              <button type="button" class="lv-btn-pax" id="pax-plus">+</button>
+            </div>
+          </div>
+
           <div class="lv-badge-promo">
             <span>📷 ¡Todas las opciones incluyen reportaje fotográfico profesional en alta definición!</span>
           </div>
-          <p class="lv-sidebar-desc">
-            Marca tus preferencias y consúltanos directamente. Adaptamos horarios, logística y presupuestos exactos para tu grupo sin compromiso.
+
+          <p style="font-size: 0.825rem; color: var(--slate-400); line-height: 1.5;">
+            Haz clic en el botón para enviar tu selección exacta por WhatsApp y te responderemos al instante con disponibilidad y presupuesto.
           </p>
-          <a href="https://wa.me/34613061747?text=%C2%A1Hola!%20He%20configurado%20un%20pack%20en%20vuestra%20web%20y%20me%20gustar%C3%ADa%20consultar%20disponibilidad." target="_blank" rel="noopener" class="lv-btn-whatsapp">
+
+          <a href="#" id="whatsapp-btn" target="_blank" rel="noopener" class="lv-btn-whatsapp">
             <span>Consultar por WhatsApp</span>
           </a>
         </aside>
@@ -407,6 +457,70 @@
       </div>
     </div>
   </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      let participants = 4;
+      const paxCountSpan = document.getElementById('pax-count');
+      const paxMinus = document.getElementById('pax-minus');
+      const paxPlus = document.getElementById('pax-plus');
+      const whatsappBtn = document.getElementById('whatsapp-btn');
+
+      paxMinus.addEventListener('click', function () {
+        if (participants > 1) {
+          participants--;
+          paxCountSpan.textContent = participants;
+          updateWhatsAppLink();
+        }
+      });
+
+      paxPlus.addEventListener('click', function () {
+        if (participants < 50) {
+          participants++;
+          paxCountSpan.textContent = participants;
+          updateWhatsAppLink();
+        }
+      });
+
+      // Escuchar cambios en cualquier input del configurador
+      document.querySelectorAll('input').forEach(input => {
+        input.addEventListener('change', updateWhatsAppLink);
+      });
+
+      function updateWhatsAppLink() {
+        // Obtener modalidad seleccionada
+        const selectedPack = document.querySelector('input[name="lv_pack"]:checked');
+        const packName = selectedPack ? selectedPack.value : 'Pack Personalizado';
+
+        // Obtener actividades seleccionadas
+        const activities = [];
+        document.querySelectorAll('input[id^="act_"]:checked').forEach(el => {
+          activities.push(el.value);
+        });
+
+        // Obtener extras seleccionados
+        const extras = [];
+        document.querySelectorAll('input[id^="ext_"]:checked').forEach(el => {
+          extras.push(el.value);
+        });
+
+        // Construir mensaje estructurado
+        let message = `¡Hola! Vengo de la web de Libertad Vertical y quiero consultar disponibilidad para este pack:\n\n`;
+        message += `• Modalidad: ${packName}\n`;
+        message += `• Participantes: ${participants} personas\n`;
+        message += `• Actividades: ${activities.length > 0 ? activities.join(', ') : 'Ninguna seleccionada'}\n`;
+        message += `• Servicios extra: ${extras.length > 0 ? extras.join(', ') : 'Ninguno'}\n\n`;
+        message += `¿Me podéis pasar presupuesto y disponibilidad?`;
+
+        // Asignar enlace de WhatsApp con la URL codificada
+        const phone = '34613061747';
+        whatsappBtn.href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+      }
+
+      // Inicializar enlace al cargar la página
+      updateWhatsAppLink();
+    });
+  </script>
 
 </body>
 </html>

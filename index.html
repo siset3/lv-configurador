@@ -1,14 +1,34 @@
-<div id="lv-pack-builder-css" class="lv-wrap">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configurador de Packs | Libertad Vertical</title>
   <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f8fafc;
+      -webkit-font-smoothing: antialiased;
+    }
     .lv-wrap {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       color: #0f172a;
       max-width: 1100px;
-      margin: 1.5rem auto;
-      padding: 0.75rem;
+      margin: 0 auto;
+      padding: 1rem;
       box-sizing: border-box;
       background: #ffffff;
-      border-radius: 1rem;
+      min-height: 100vh;
+    }
+    @media (min-width: 768px) {
+      .lv-wrap {
+        margin: 2rem auto;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        min-height: auto;
+      }
     }
     .lv-wrap *, .lv-wrap *::before, .lv-wrap *::after {
       box-sizing: border-box;
@@ -21,10 +41,7 @@
     @media (min-width: 992px) {
       .lv-wrap .lv-grid {
         grid-template-columns: 2fr 1fr;
-      }
-      .lv-wrap {
-        padding: 1.5rem;
-        margin: 2rem auto;
+        gap: 2rem;
       }
     }
     .lv-wrap .lv-section-title {
@@ -44,11 +61,11 @@
       pointer-events: none;
     }
     
-    /* Grid de Modalidades (Adaptable móvil: 1 col en móvil, 3 cols en escritorio) */
+    /* Grid de Modalidades */
     .lv-wrap .lv-cards-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 0.65rem;
+      gap: 0.75rem;
     }
     @media (min-width: 640px) {
       .lv-wrap .lv-cards-grid {
@@ -60,7 +77,7 @@
       cursor: pointer;
       border: 2px solid #e2e8f0;
       border-radius: 0.75rem;
-      padding: 0.85rem;
+      padding: 1rem;
       background: #ffffff;
       transition: all 0.2s ease;
       height: 100%;
@@ -78,9 +95,9 @@
     }
     .lv-wrap .lv-card-title {
       font-weight: 700;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       color: #0f172a;
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.25rem;
     }
     .lv-wrap .lv-card-desc {
       font-size: 0.75rem;
@@ -88,7 +105,7 @@
       line-height: 1.3;
     }
 
-    /* Grid de Actividades y Extras (1 col en móvil, 2 cols en tablets/escritorio) */
+    /* Grid de Actividades y Extras */
     .lv-wrap .lv-checkbox-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -103,7 +120,7 @@
       cursor: pointer;
       border: 1.5px solid #e2e8f0;
       border-radius: 0.5rem;
-      padding: 0.75rem 0.85rem;
+      padding: 0.75rem 1rem;
       background: #ffffff;
       font-size: 0.85rem;
       font-weight: 600;
@@ -135,7 +152,7 @@
       color: #059669;
     }
 
-    /* Sidebar / Resumen optimizado para móvil */
+    /* Sidebar / Resumen */
     .lv-wrap .lv-sidebar {
       background: #0f172a;
       color: #ffffff;
@@ -152,11 +169,11 @@
       }
     }
     .lv-wrap .lv-sidebar-title {
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       font-weight: 700;
       border-bottom: 1px solid #334155;
-      padding-bottom: 0.65rem;
-      margin-bottom: 0.85rem;
+      padding-bottom: 0.75rem;
+      margin-bottom: 1rem;
     }
     .lv-wrap .lv-notice-tag {
       background: rgba(16, 185, 129, 0.15);
@@ -165,7 +182,7 @@
       border-radius: 0.5rem;
       font-size: 0.75rem;
       font-weight: 600;
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
       line-height: 1.4;
     }
     .lv-wrap .lv-btn-submit {
@@ -186,105 +203,111 @@
       background: #34d399;
     }
   </style>
+</head>
+<body>
 
-  <div class="lv-grid">
-    <!-- CONFIGURADOR -->
-    <div style="display: flex; flex-direction: column; gap: 1.25rem;">
-      
-      <!-- Paso 1 -->
-      <div>
-        <div class="lv-section-title">1. Elige tu modalidad de Pack</div>
-        <div class="lv-cards-grid">
-          <div>
-            <input type="radio" name="lv_pack" id="pack_multi" class="lv-hidden-input" checked>
-            <label for="pack_multi" class="lv-card-label">
-              <div class="lv-card-title">Pack Multiaventura</div>
-              <div class="lv-card-desc">Fin de semana completo con alojamiento, transporte y varias actividades.</div>
-            </label>
-          </div>
-          <div>
-            <input type="radio" name="lv_pack" id="pack_grupo" class="lv-hidden-input">
-            <label for="pack_grupo" class="lv-card-label">
-              <div class="lv-card-title">Pack Grupos</div>
-              <div class="lv-card-desc">Ideal para cumples o despedidas. ¡Ahorra más cuantos más seáis!</div>
-            </label>
-          </div>
-          <div>
-            <input type="radio" name="lv_pack" id="pack_vip" class="lv-hidden-input">
-            <label for="pack_vip" class="lv-card-label">
-              <div class="lv-card-title">Pack VIP Exclusivo</div>
-              <div class="lv-card-desc">Guía solo para vosotros (1 a 5 pax), pícnic, sorpresas y vídeo POV.</div>
-            </label>
+  <div class="lv-wrap">
+    <div class="lv-grid">
+      <!-- CONFIGURADOR -->
+      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        
+        <!-- Paso 1 -->
+        <div>
+          <div class="lv-section-title">1. Elige tu modalidad de Pack</div>
+          <div class="lv-cards-grid">
+            <div>
+              <input type="radio" name="lv_pack" id="pack_multi" class="lv-hidden-input" checked>
+              <label for="pack_multi" class="lv-card-label">
+                <div class="lv-card-title">Pack Multiaventura</div>
+                <div class="lv-card-desc">Fin de semana completo con alojamiento, transporte y varias actividades.</div>
+              </label>
+            </div>
+            <div>
+              <input type="radio" name="lv_pack" id="pack_grupo" class="lv-hidden-input">
+              <label for="pack_grupo" class="lv-card-label">
+                <div class="lv-card-title">Pack Grupos</div>
+                <div class="lv-card-desc">Ideal para cumples o despedidas. ¡Ahorra más cuantos más seáis!</div>
+              </label>
+            </div>
+            <div>
+              <input type="radio" name="lv_pack" id="pack_vip" class="lv-hidden-input">
+              <label for="pack_vip" class="lv-card-label">
+                <div class="lv-card-title">Pack VIP Exclusivo</div>
+                <div class="lv-card-desc">Guía solo para vosotros (1 a 5 pax), pícnic, sorpresas y vídeo POV.</div>
+              </label>
+            </div>
           </div>
         </div>
+
+        <!-- Paso 2 -->
+        <div>
+          <div class="lv-section-title">2. Selecciona tus deportes de aventura</div>
+          <div class="lv-checkbox-grid">
+            <div>
+              <input type="checkbox" id="act_barranco" class="lv-hidden-input" checked>
+              <label for="act_barranco" class="lv-check-label">Barranquismo (Jorox / Zarzalones)</label>
+            </div>
+            <div>
+              <input type="checkbox" id="act_ferrata" class="lv-hidden-input">
+              <label for="act_ferrata" class="lv-check-label">Vía Ferrata (Comares / Archidona)</label>
+            </div>
+            <div>
+              <input type="checkbox" id="act_caminito" class="lv-hidden-input">
+              <label for="act_caminito" class="lv-check-label">Caminito del Rey + Multiaventura</label>
+            </div>
+            <div>
+              <input type="checkbox" id="act_cuevas" class="lv-hidden-input">
+              <label for="act_cuevas" class="lv-check-label">Cuevas (Cueva Excéntrica Igualeja)</label>
+            </div>
+            <div>
+              <input type="checkbox" id="act_senderismo" class="lv-hidden-input">
+              <label for="act_senderismo" class="lv-check-label">Senderismo (Río Chíllar / Mulhacén)</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Paso 3 -->
+        <div>
+          <div class="lv-section-title">3. Servicios adicionales</div>
+          <div class="lv-checkbox-grid">
+            <div>
+              <input type="checkbox" id="ext_alojamiento" class="lv-hidden-input">
+              <label for="ext_alojamiento" class="lv-check-label">Incluir Alojamiento / Casa Rural</label>
+            </div>
+            <div>
+              <input type="checkbox" id="ext_transporte" class="lv-hidden-input">
+              <label for="ext_transporte" class="lv-check-label">Incluir Transporte a Actividades</label>
+            </div>
+            <div>
+              <input type="checkbox" id="ext_picnic" class="lv-hidden-input">
+              <label for="ext_picnic" class="lv-check-label">Pícnic y Bebida al terminar</label>
+            </div>
+            <div>
+              <input type="checkbox" id="ext_video" class="lv-hidden-input">
+              <label for="ext_video" class="lv-check-label">Vídeo Editado en 1ª Persona (POV)</label>
+            </div>
+          </div>
+        </div>
+
       </div>
 
-      <!-- Paso 2 -->
+      <!-- SIDEBAR -->
       <div>
-        <div class="lv-section-title">2. Selecciona tus deportes de aventura</div>
-        <div class="lv-checkbox-grid">
-          <div>
-            <input type="checkbox" id="act_barranco" class="lv-hidden-input" checked>
-            <label for="act_barranco" class="lv-check-label">Barranquismo (Jorox / Zarzalones)</label>
+        <div class="lv-sidebar">
+          <div class="lv-sidebar-title">Tu Experiencia a Medida</div>
+          <div class="lv-notice-tag">
+            📷 ¡Todas las opciones incluyen reportaje fotográfico profesional!
           </div>
-          <div>
-            <input type="checkbox" id="act_ferrata" class="lv-hidden-input">
-            <label for="act_ferrata" class="lv-check-label">Vía Ferrata (Comares / Archidona)</label>
-          </div>
-          <div>
-            <input type="checkbox" id="act_caminito" class="lv-hidden-input">
-            <label for="act_caminito" class="lv-check-label">Caminito del Rey + Multiaventura</label>
-          </div>
-          <div>
-            <input type="checkbox" id="act_cuevas" class="lv-hidden-input">
-            <label for="act_cuevas" class="lv-check-label">Cuevas (Cueva Excéntrica Igualeja)</label>
-          </div>
-          <div>
-            <input type="checkbox" id="act_senderismo" class="lv-hidden-input">
-            <label for="act_senderismo" class="lv-check-label">Senderismo (Río Chíllar / Mulhacén)</label>
-          </div>
+          <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; margin-bottom: 1.5rem;">
+            Marca tus preferencias y escríbenos directamente por WhatsApp. Adaptamos horarios, logística y tarifas exactas a tu grupo sin compromiso.
+          </p>
+          <a href="https://wa.me/34613061747?text=%C2%A1Hola!%20Vengo%20de%20la%20web%20de%20Libertad%20Vertical%20y%20me%20gustar%C3%ADa%20pedir%20presupuesto%20para%20un%20pack%20personalizado." target="_blank" rel="noopener" class="lv-btn-submit">
+            Consultar por WhatsApp
+          </a>
         </div>
-      </div>
-
-      <!-- Paso 3 -->
-      <div>
-        <div class="lv-section-title">3. Servicios adicionales</div>
-        <div class="lv-checkbox-grid">
-          <div>
-            <input type="checkbox" id="ext_alojamiento" class="lv-hidden-input">
-            <label for="ext_alojamiento" class="lv-check-label">Incluir Alojamiento / Casa Rural</label>
-          </div>
-          <div>
-            <input type="checkbox" id="ext_transporte" class="lv-hidden-input">
-            <label for="ext_transporte" class="lv-check-label">Incluir Transporte a Actividades</label>
-          </div>
-          <div>
-            <input type="checkbox" id="ext_picnic" class="lv-hidden-input">
-            <label for="ext_picnic" class="lv-check-label">Pícnic y Bebida al terminar</label>
-          </div>
-          <div>
-            <input type="checkbox" id="ext_video" class="lv-hidden-input">
-            <label for="ext_video" class="lv-check-label">Vídeo Editado en 1ª Persona (POV)</label>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- SIDEBAR -->
-    <div>
-      <div class="lv-sidebar">
-        <div class="lv-sidebar-title">Tu Experiencia a Medida</div>
-        <div class="lv-notice-tag">
-          📷 ¡Todas las opciones incluyen reportaje fotográfico profesional!
-        </div>
-        <p style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5; margin-bottom: 1.25rem;">
-          Marca tus preferencias y escríbenos directamente por WhatsApp. Adaptamos horarios, logística y tarifas exactas a tu grupo sin compromiso.
-        </p>
-        <a href="https://wa.me/34613061747?text=%C2%A1Hola!%20Vengo%20de%20la%20web%20de%20Libertad%20Vertical%20y%20me%20gustar%C3%ADa%20pedir%20presupuesto%20para%20un%20pack%20personalizado." target="_blank" rel="noopener" class="lv-btn-submit">
-          Consultar por WhatsApp
-        </a>
       </div>
     </div>
   </div>
-</div>
+
+</body>
+</html>

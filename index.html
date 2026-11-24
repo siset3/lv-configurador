@@ -365,12 +365,19 @@
       background: #34d399;
       transform: translateY(-1px);
     }
-  </style>
+   .lv-language { display:flex; justify-content:flex-end; align-items:center; gap:.65rem; margin-bottom:1.5rem; flex-wrap:wrap; font-weight:600; }
+.lv-language select { font:inherit; color:var(--slate-900); background:white; border:1.5px solid var(--slate-200); border-radius:.5rem; padding:.55rem .8rem; }
+.lv-language select:focus-visible, .lv-hidden-input:focus-visible + label { outline:2px solid var(--primary); outline-offset:3px; }
+.lv-preview-value { min-width:0; overflow-wrap:anywhere; }
+
+.lv-language-picker { position:relative; }
+</style>
 </head>
 <body>
 
   <main class="lv-app-container">
     <div class="lv-card-wrapper">
+      <div class="lv-language"><label for="lv-lang">Idioma</label><div class="lv-language-picker"><select id="lv-lang"><option value="es">🇪🇸 Español</option><option value="en">🇬🇧 English</option><option value="fr">🇫🇷 Français</option><option value="de">🇩🇪 Deutsch</option><option value="it">🇮🇹 Italiano</option></select></div></div>
       <div class="lv-grid-layout">
         
         <!-- CONFIGURADOR INTERACTIVO -->
@@ -505,89 +512,52 @@
     </div>
   </main>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      let participants = 4;
-      const paxCountSpan = document.getElementById('pax-count');
-      const paxMinus = document.getElementById('pax-minus');
-      const paxPlus = document.getElementById('pax-plus');
-      const whatsappBtn = document.getElementById('whatsapp-btn');
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+const translations = {"Configurador de Packs | Libertad Vertical": ["Adventure Package Builder | Libertad Vertical", "Configurateur de séjours | Libertad Vertical", "Abenteuerpaket-Konfigurator | Libertad Vertical", "Configuratore di pacchetti | Libertad Vertical"], "1. Elige tu modalidad de Pack": ["1. Choose your package", "1. Choisissez votre formule", "1. Wählen Sie Ihr Paket", "1. Scegli il tuo pacchetto"], "Pack Multiaventura": ["Multi-adventure Package", "Pack Multi-aventure", "Multiabenteuer-Paket", "Pacchetto Multiavventura"], "Fin de semana completo con alojamiento y actividades clave.": ["Full weekend with accommodation and main activities.", "Week-end complet avec hébergement et activités principales.", "Komplettes Wochenende mit Unterkunft und Hauptaktivitäten.", "Weekend completo con alloggio e attività principali."], "Pack Grupos": ["Group Package", "Pack Groupes", "Gruppenpaket", "Pacchetto Gruppi"], "Ideal cumples o despedidas. ¡Tarifa optimizada por volumen!": ["Ideal for birthdays or bachelor and bachelorette parties. Group rates!", "Idéal pour les anniversaires et enterrements de vie de célibataire. Tarif de groupe !", "Ideal für Geburtstage und Junggesellenabschiede. Gruppentarife!", "Ideale per compleanni e addii al celibato o nubilato. Tariffe di gruppo!"], "Pack VIP Exclusivo": ["Exclusive VIP Package", "Pack VIP Exclusif", "Exklusives VIP-Paket", "Pacchetto VIP Esclusivo"], "Guía privado (1-5 pax), pícnic gourmet y vídeo POV.": ["Private guide (1–5 people), gourmet picnic and POV video.", "Guide privé (1–5 personnes), pique-nique gastronomique et vidéo POV.", "Privater Guide (1–5 Personen), Gourmet-Picknick und POV-Video.", "Guida privata (1–5 persone), picnic gourmet e video POV."], "2. Selecciona tus deportes de aventura": ["2. Choose your adventure sports", "2. Choisissez vos sports d’aventure", "2. Wählen Sie Ihre Abenteuersportarten", "2. Scegli i tuoi sport d’avventura"], "Barranquismo (Jorox / Zarzalones)": ["Canyoning (Jorox / Zarzalones)", "Canyoning (Jorox / Zarzalones)", "Canyoning (Jorox / Zarzalones)", "Torrentismo (Jorox / Zarzalones)"], "Vía Ferrata (Comares / Archidona)": ["Via Ferrata (Comares / Archidona)", "Via ferrata (Comares / Archidona)", "Klettersteig (Comares / Archidona)", "Via ferrata (Comares / Archidona)"], "Caminito del Rey + Multiaventura": ["Caminito del Rey + Multi-adventure", "Caminito del Rey + Multi-aventure", "Caminito del Rey + Multiabenteuer", "Caminito del Rey + Multiavventura"], "Cuevas (Cueva Excéntrica Igualeja)": ["Caving (Cueva Excéntrica Igualeja)", "Spéléologie (Cueva Excéntrica Igualeja)", "Höhlentour (Cueva Excéntrica Igualeja)", "Speleologia (Cueva Excéntrica Igualeja)"], "Senderismo (Río Chíllar / Mulhacén)": ["Hiking (Río Chíllar / Mulhacén)", "Randonnée (Río Chíllar / Mulhacén)", "Wandern (Río Chíllar / Mulhacén)", "Escursionismo (Río Chíllar / Mulhacén)"], "3. Servicios adicionales": ["3. Additional services", "3. Services supplémentaires", "3. Zusatzleistungen", "3. Servizi aggiuntivi"], "Incluir Alojamiento / Casa Rural": ["Include accommodation / country house", "Inclure l’hébergement / gîte rural", "Unterkunft / Landhaus hinzufügen", "Includi alloggio / casa rurale"], "Alojamiento / Casa Rural": ["Accommodation / country house", "Hébergement / gîte rural", "Unterkunft / Landhaus", "Alloggio / casa rurale"], "Incluir Transporte a Actividades": ["Include transport to activities", "Inclure le transport vers les activités", "Transfer zu Aktivitäten hinzufügen", "Includi trasporto alle attività"], "Transporte a Actividades": ["Transport to activities", "Transport vers les activités", "Transfer zu Aktivitäten", "Trasporto alle attività"], "Pícnic y Bebida al terminar": ["Picnic and drink afterwards", "Pique-nique et boisson après l’activité", "Picknick und Getränk im Anschluss", "Picnic e bevanda al termine"], "Vídeo Editado en 1ª Persona (POV)": ["Edited first-person video (POV)", "Vidéo subjective montée (POV)", "Geschnittenes Video aus der Ich-Perspektive (POV)", "Video montato in prima persona (POV)"], "Tu Experiencia a Medida": ["Your Tailor-made Experience", "Votre expérience sur mesure", "Ihr maßgeschneidertes Erlebnis", "La tua esperienza su misura"], "Participantes:": ["Participants:", "Participants :", "Teilnehmer:", "Partecipanti:"], "Modalidad:": ["Package:", "Formule :", "Paket:", "Pacchetto:"], "Actividades:": ["Activities:", "Activités :", "Aktivitäten:", "Attività:"], "Extras:": ["Extras:", "Options :", "Extras:", "Extra:"], "Ninguno": ["None", "Aucun", "Keine", "Nessuno"], "📷 ¡Todas las opciones incluyen reportaje fotográfico profesional en alta definición!": ["📷 All options include professional high-definition photography!", "📷 Toutes les formules incluent un reportage photo professionnel en haute définition !", "📷 Alle Optionen beinhalten professionelle hochauflösende Fotos!", "📷 Tutte le opzioni includono un servizio fotografico professionale in alta definizione!"], "Consultar por WhatsApp": ["Enquire via WhatsApp", "Demander via WhatsApp", "Per WhatsApp anfragen", "Chiedi via WhatsApp"], "Pack Personalizado": ["Custom Package", "Pack personnalisé", "Individuelles Paket", "Pacchetto personalizzato"], "persona": ["person", "personne", "Person", "persona"], "personas": ["people", "personnes", "Personen", "persone"], "Ninguna seleccionada": ["None selected", "Aucune sélectionnée", "Keine ausgewählt", "Nessuna selezionata"], "¡Hola! Vengo de la web de Libertad Vertical y quiero consultar disponibilidad para este pack:": ["Hello! I found you on the Libertad Vertical website and would like to check availability for this package:", "Bonjour ! Je viens du site de Libertad Vertical et souhaite connaître les disponibilités pour cette formule :", "Hallo! Ich komme von der Website Libertad Vertical und möchte die Verfügbarkeit für dieses Paket erfragen:", "Ciao! Arrivo dal sito di Libertad Vertical e vorrei verificare la disponibilità per questo pacchetto:"], "Servicios extra:": ["Additional services:", "Services supplémentaires :", "Zusatzleistungen:", "Servizi extra:"], "¿Me podéis pasar presupuesto y disponibilidad?": ["Could you send me a quote and availability?", "Pourriez-vous m’envoyer un devis et vos disponibilités ?", "Könnten Sie mir ein Angebot und die Verfügbarkeit mitteilen?", "Potreste inviarmi un preventivo e le disponibilità?"], "Idioma": ["Language", "Langue", "Sprache", "Lingua"], "Quitar participante": ["Remove participant", "Retirer un participant", "Teilnehmer entfernen", "Rimuovi partecipante"], "Añadir participante": ["Add participant", "Ajouter un participant", "Teilnehmer hinzufügen", "Aggiungi partecipante"]};
+const languages = ['es','en','fr','de','it'];
+const selector = document.getElementById('lv-lang');
+let saved; try { saved = localStorage.getItem('lv-language'); } catch(e) {}
+const requested = new URLSearchParams(location.search).get('lang');
+let lang = [requested,saved,(navigator.language || 'es').split('-')[0]].find(x=>languages.includes(x)) || 'es';
+const t = key => lang === 'es' ? key : (translations[key]?.[languages.indexOf(lang)-1] || key);
+const nodes = [];
+const walker = document.createTreeWalker(document.querySelector('main'), NodeFilter.SHOW_TEXT);
+while(walker.nextNode()) { const node=walker.currentNode; const key=node.nodeValue.trim(); if(Object.prototype.hasOwnProperty.call(translations,key) && !node.parentElement.closest('#prev-pack,#prev-activities,#prev-extras')) nodes.push([node,key]); }
+let participants=4;
+const get=id=>document.getElementById(id);
+function updateConfigurator(){
+ const pack=t(document.querySelector('input[name="lv_pack"]:checked')?.value || 'Pack Personalizado');
+ const selected=prefix=>Array.from(document.querySelectorAll(`input[id^="${prefix}"]:checked`),el=>t(el.value));
+ const activities=selected('act_'), extras=selected('ext_');
+ const activityText=activities.join(', ') || t('Ninguna seleccionada');
+ const extraText=extras.join(', ') || t('Ninguno');
+ const people=`${participants} ${t(participants===1?'persona':'personas')}`;
+ get('pax-count').textContent=participants;
+ get('prev-pack').textContent=`${pack} (${people})`;
+ get('prev-activities').textContent=activityText;
+ get('prev-extras').textContent=extraText;
+ get('prev-extras-container').style.display=extras.length?'flex':'none';
+ const message=[t('¡Hola! Vengo de la web de Libertad Vertical y quiero consultar disponibilidad para este pack:'),'',`• ${t('Modalidad:')} ${pack}`,`• ${t('Participantes:')} ${people}`,`• ${t('Actividades:')} ${activityText}`,`• ${t('Servicios extra:')} ${extraText}`,'',t('¿Me podéis pasar presupuesto y disponibilidad?')].join('\n');
+ get('whatsapp-btn').href='https://wa.me/34613061747?text='+encodeURIComponent(message);
+}
+function applyLanguage(){
+ document.documentElement.lang=lang;
+ document.title=t('Configurador de Packs | Libertad Vertical');
+ selector.value=lang;
 
-      // Elementos del Preview visual
-      const prevPack = document.getElementById('prev-pack');
-      const prevActivities = document.getElementById('prev-activities');
-      const prevExtras = document.getElementById('prev-extras');
-      const prevExtrasContainer = document.getElementById('prev-extras-container');
-
-      paxMinus.addEventListener('click', function () {
-        if (participants > 1) {
-          participants--;
-          paxCountSpan.textContent = participants;
-          updateConfigurator();
-        }
-      });
-
-      paxPlus.addEventListener('click', function () {
-        if (participants < 50) {
-          participants++;
-          paxCountSpan.textContent = participants;
-          updateConfigurator();
-        }
-      });
-
-      document.querySelectorAll('input').forEach(input => {
-        input.addEventListener('change', updateConfigurator);
-      });
-
-      function updateConfigurator() {
-        // 1. Obtener modalidad
-        const selectedPack = document.querySelector('input[name="lv_pack"]:checked');
-        const packName = selectedPack ? selectedPack.value : 'Pack Personalizado';
-
-        // 2. Obtener actividades
-        const activities = [];
-        document.querySelectorAll('input[id^="act_"]:checked').forEach(el => {
-          activities.push(el.value);
-        });
-
-        // 3. Obtener extras
-        const extras = [];
-        document.querySelectorAll('input[id^="ext_"]:checked').forEach(el => {
-          extras.push(el.value);
-        });
-
-        // --- ACTUALIZAR PREVIEW VISUAL EN LA PANTALLA ---
-        prevPack.textContent = `${packName} (${participants} ${participants === 1 ? 'persona' : 'personas'})`;
-        
-        if (activities.length > 0) {
-          prevActivities.textContent = activities.join(', ');
-        } else {
-          prevActivities.textContent = 'Ninguna seleccionada';
-        }
-
-        if (extras.length > 0) {
-          prevExtrasContainer.style.display = 'flex';
-          prevExtras.textContent = extras.join(', ');
-        } else {
-          prevExtrasContainer.style.display = 'none';
-        }
-
-        // --- CONSTRUIR MENSAJE Y ENLACE DE WHATSAPP ---
-        let message = `¡Hola! Vengo de la web de Libertad Vertical y quiero consultar disponibilidad para este pack:\n\n`;
-        message += `• Modalidad: ${packName}\n`;
-        message += `• Participantes: ${participants} personas\n`;
-        message += `• Actividades: ${activities.length > 0 ? activities.join(', ') : 'Ninguna seleccionada'}\n`;
-        message += `• Servicios extra: ${extras.length > 0 ? extras.join(', ') : 'Ninguno'}\n\n`;
-        message += `¿Me podéis pasar presupuesto y disponibilidad?`;
-
-        const phone = '34613061747';
-        whatsappBtn.href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-      }
-
-      // Inicializar al cargar
-      updateConfigurator();
-    });
-  </script>
+ nodes.forEach(([node,key])=>node.nodeValue=t(key));
+ get('pax-minus').setAttribute('aria-label',t('Quitar participante'));
+ get('pax-plus').setAttribute('aria-label',t('Añadir participante'));
+ updateConfigurator();
+}
+selector.addEventListener('change',()=>{lang=selector.value;try{localStorage.setItem('lv-language',lang);}catch(e){} applyLanguage();});
+get('pax-minus').addEventListener('click',()=>{if(participants>1){participants--;updateConfigurator();}});
+get('pax-plus').addEventListener('click',()=>{if(participants<50){participants++;updateConfigurator();}});
+document.querySelectorAll('input').forEach(el=>el.addEventListener('change',updateConfigurator));
+applyLanguage();
+});
+</script>
 
 </body>
 </html>
